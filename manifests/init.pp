@@ -35,5 +35,6 @@ class hhvm (
 
   anchor { 'hhvm::begin': } ->
     class { 'hhvm::package': } ->
+    class { 'hhvm::service': } ->
   anchor { 'hhvm::end': }
 }

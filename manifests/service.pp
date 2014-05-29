@@ -1,12 +1,6 @@
-# == Class: hhvm::package
+# == Class: hhvm::service
 #
-# Install hhvm
-#
-# === Parameters
-#
-# [*package*]
-#   The package name for hhvm
-#   For debian it's hhvm5-cli
+# Start and control hhvm service
 #
 # === Authors
 #
@@ -16,17 +10,17 @@
 #
 # See LICENSE file
 #
-class hhvm::package(
-  $package = 'hhvm'
-) {
+class hhvm::service {
 
   if $caller_module_name != $module_name {
     warning("${name} is not part of the public API of the ${module_name} module and should not be directly included in the manifest.")
   }
 
-  validate_string($package)
-
-  package { $package:
-    ensure => 'installed',
+  service { 'hhvm':
+    ensure    => 'running',
+    enable    => true,
+    restart   => 'service hhvm reload',
+    hasstatus => true,
+    require   => Package['hhvm'],
   }
 }
