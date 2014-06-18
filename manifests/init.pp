@@ -34,7 +34,9 @@ class hhvm (
   }
 
   anchor { 'hhvm::begin': } ->
+    class { 'hhvm::augeas': } ->
     class { 'hhvm::package': } ->
+    class { 'hhvm::config': } ->
     class { 'hhvm::service': } ->
   anchor { 'hhvm::end': }
 }

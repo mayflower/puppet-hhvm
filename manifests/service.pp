@@ -19,7 +19,6 @@ class hhvm::service {
   service { 'hhvm':
     ensure    => 'running',
     enable    => true,
-    restart   => 'service hhvm reload',
     hasstatus => true,
     require   => Package['hhvm'],
   }
