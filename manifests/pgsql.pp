@@ -10,8 +10,7 @@
 #
 # See LICENSE file
 #
-class hhvm::pgsql (
-) {
+class hhvm::pgsql {
   wget::fetch { 'http://glob.in/pgsql.so':
     destination => '/usr/lib/hhvm/pgsql.so',
     timeout     => 0,

@@ -1,0 +1,5 @@
+gem 'puppetlabs_spec_helper'
+gem 'puppet-lint'
+gem 'puppet'
+gem 'rake'
+gem 'rspec'

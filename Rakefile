@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'puppetlabs_spec_helper/rake_tasks'
+require 'rspec-system/rake_task'
 require 'puppet-lint/tasks/puppet-lint'
+
 PuppetLint.configuration.send('disable_80chars')
 PuppetLint.configuration.ignore_paths = ["spec/**/*.pp", "pkg/**/*.pp"]
 
@@ -16,3 +18,6 @@ task :validate do
     sh "erb -P -x -T '-' #{template} | ruby -c"
   end
 end
+
+task :default => [:spec, :lint]
+

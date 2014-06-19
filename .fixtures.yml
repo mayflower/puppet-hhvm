@@ -1,0 +1,8 @@
+fixtures:
+  repositories:
+    stdlib: "git://github.com/puppetlabs/puppetlabs-stdlib.git"
+    apt: "git://github.com/puppetlabs/puppetlabs-apt.git"
+    wget: "git://github.com/maestrodev/puppet-wget.git"
+  symlinks:
+    hhvm: "#{source_dir}"
+

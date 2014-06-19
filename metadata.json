@@ -11,6 +11,14 @@
     {
       "name": "puppetlabs-stdlib",
       "version_range": ">= 1.0.0"
+    },
+    {
+      "name": "puppetlabs-apt",
+      "version_range": ">= 1.0.0"
+    },
+    {
+      "name": "maestrodev-wget",
+      "version_range": ">= 1.0.0"
     }
   ]
 }

@@ -40,7 +40,7 @@ class hhvm::augeas {
     }
   }
 
-  file { "/usr/share/augeas/lenses/contrib/hhvm.aug":
+  file { '/usr/share/augeas/lenses/contrib/hhvm.aug':
     ensure  => present,
     source  => 'puppet:///modules/hhvm/hhvm.aug',
     require => File['/usr/share/augeas/lenses/contrib']

@@ -3,77 +3,59 @@
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with hhvm](#setup)
-    * [What hhvm affects](#what-hhvm-affects)
+2. [Setup - The basics of getting started with hhvm](#setup)
     * [Setup requirements](#setup-requirements)
     * [Beginning with hhvm](#beginning-with-hhvm)
-4. [Usage - Configuration options and additional functionality](#usage)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+3. [Usage - Configuration options and additional functionality](#usage)
+4. [Limitations - OS compatibility, etc.](#limitations)
+5. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+This module installs and configures Facebook's HHVM for you. It aims to use sane defaults and be easily configurable with hiera.
 
-## Module Description
+## Dependencies
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
-
-## Setup
-
-### What hhvm affects
-
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
-
-### Beginning with hhvm
-
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+HHVM depends on 
+ * puppetlabs/stdlib
+ * puppetlabs/apt for the repository configureation
+ * maestrodev/wget for the highly experimental pgsql support.
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
+To use the module simply use the base class which will do everything you need. You may turn off repo management or use the **highly experimental** pgsql support.
+```puppet
+class { '::hhvm':
+  manage_repos => true,
+  pgsql        => false
+}
+```
 
-## Reference
+Additional configs (with defaults):
+```yaml
+hhvm::config::user: www-data   # user to run server with
+hhvm::config::group: www-data  # group to run server with
+hhvm::config::port: 9000       # port for fastcgi server
+hhvm::config::settings: []     # augeas commands for php.ini
+```
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+Example config:
+```yaml
+hhvm::config::user: vagrant
+hhvm::config::group: users
+hhvm::config::port: 9090
+hhvm::config::settings: 
+  - set .anon/date.datetime Europe/Berlin
+```
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Currently only tested with Ubuntu 14.04 Trusty Tahr
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+ *  If you find a bug or wish to have a new feature simply open an issue.
+ *  Otherwise if you are really motivated pull requests are always welcome, too.
 
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+## Credits
+ * Created by [Robin Gloster](https://github.com/globin)
