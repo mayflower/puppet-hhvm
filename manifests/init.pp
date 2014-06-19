@@ -22,7 +22,8 @@
 # See LICENSE file
 #
 class hhvm (
-  $manage_repos = true
+  $manage_repos = true,
+  $pgsql        = false,
 ) {
 
   validate_bool($manage_repos)
@@ -39,4 +40,10 @@ class hhvm (
     class { 'hhvm::config': } ->
     class { 'hhvm::service': } ->
   anchor { 'hhvm::end': }
+
+  if $pgsql {
+    Class['hhvm::package'] ->
+    class { 'hhvm::pgsql': } ->
+    Class['hhvm::service']
+  }
 }
