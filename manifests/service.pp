@@ -20,6 +20,6 @@ class hhvm::service {
     ensure    => 'running',
     enable    => true,
     hasstatus => true,
-    require   => Package['hhvm'],
+    require   => Package[$hhvm::package::package],
   }
 }
