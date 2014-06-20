@@ -6,7 +6,6 @@
 #
 # [*package*]
 #   The package name for hhvm
-#   For debian it's hhvm5-cli
 #
 # === Authors
 #
