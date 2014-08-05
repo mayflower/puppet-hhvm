@@ -13,7 +13,6 @@ describe 'hhvm', :type => :class do
       })
       should contain_class('hhvm::repo')
       should_not contain_class('hhvm::pgsql')
-      should contain_class('hhvm::augeas')
       should contain_class('hhvm::config')
       should contain_class('hhvm::service')
     }

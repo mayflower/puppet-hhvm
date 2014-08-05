@@ -26,12 +26,17 @@ class hhvm::config (
   $user     = 'www-data',
   $group    = 'www-data',
   $port     = 9000,
-  $settings = []
+  $settings = {}
 ) {
 
   if $caller_module_name != $module_name {
     warning("${name} is not part of the public API of the ${module_name} module and should not be directly included in the manifest.")
   }
+
+  validate_hash($settings)
+  validate_string($user)
+  validate_string($group)
+  validate_string($port)
 
   $default_conf_file = '/etc/default/hhvm'
   create_resources(config::setting, to_hash_settings({
