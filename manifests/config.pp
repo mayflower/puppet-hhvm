@@ -26,44 +26,37 @@ class hhvm::config (
   $user     = 'www-data',
   $group    = 'www-data',
   $port     = 9000,
-  $settings = []
+  $settings = {}
 ) {
 
   if $caller_module_name != $module_name {
     warning("${name} is not part of the public API of the ${module_name} module and should not be directly included in the manifest.")
   }
 
-  include hhvm::augeas
+  validate_hash($settings)
+  validate_string($user)
+  validate_string($group)
+  validate_string($port)
 
-  augeas { 'hhvm-default-config':
-    incl      => '/etc/default/hhvm',
-    changes   => [
-      "set .anon/RUN_AS_USER \"${user}\"",
-      "set .anon/RUN_AS_GROUP \"${group}\"",
-    ],
-    load_path => '/usr/share/augeas/lenses/contrib',
-    lens      => 'HHVM.lns',
-    require   => Class['hhvm::augeas'],
-    notify    => Service['hhvm']
+  $default_conf_file = '/etc/default/hhvm'
+  create_resources(config::setting, to_hash_settings({
+    'RUN_AS_USER' => $user,
+    'RUN_AS_GROUP' => $group
+  }, $default_conf_file), {
+    file   => $default_conf_file,
+    notify => Service['hhvm']
+  })
+
+  config::setting { 'hhvm-server-ini':
+    file   => '/etc/hhvm/server.ini',
+    key    => 'hhvm.server.port',
+    value  => $port,
+    notify => Service['hhvm']
   }
 
-  augeas { 'hhvm-server-ini':
-    incl      => '/etc/hhvm/server.ini',
-    changes   => [
-      "set .anon/hhvm.server.port ${port}"
-    ],
-    load_path => '/usr/share/augeas/lenses/contrib',
-    lens      => 'HHVM.lns',
-    require   => Class['hhvm::augeas'],
-    notify    => Service['hhvm']
-  }
-
-  augeas { 'hhvm-php-ini':
-    incl      => '/etc/hhvm/php.ini',
-    changes   => $settings,
-    load_path => '/usr/share/augeas/lenses/contrib',
-    lens      => 'HHVM.lns',
-    require   => Class['hhvm::augeas'],
-    notify    => Service['hhvm']
-  }
+  $php_ini = '/etc/hhvm/php.ini'
+  create_resources(config::setting, to_hash_settings($settings, $php_ini), {
+    file   => $php_ini,
+    notify => Service['hhvm']
+  })
 }
