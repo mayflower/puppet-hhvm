@@ -18,7 +18,7 @@ This module installs and configures Facebook's HHVM for you. It aims to use sane
 
 ## Dependencies
 
-HHVM depends on 
+HHVM depends on
  * puppetlabs/stdlib
  * puppetlabs/apt for the repository configureation
  * maestrodev/wget for the highly experimental pgsql support.
@@ -46,8 +46,8 @@ Example config:
 hhvm::config::user: vagrant
 hhvm::config::group: users
 hhvm::config::port: 9090
-hhvm::config::settings: 
-  - set .anon/date.datetime Europe/Berlin
+hhvm::config::settings:
+  - set .anon/date.timezone Europe/Berlin
 ```
 
 ## Limitations
