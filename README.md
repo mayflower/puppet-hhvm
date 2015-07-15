@@ -1,6 +1,6 @@
 # hhvm
 
-[![Build Status](https://travis-ci.org/Mayflower/puppet-hhvm.svg?branch=master)](https://travis-ci.org/Mayflower/puppet-hhvm)
+[![Build Status](https://travis-ci.org/mayflower/puppet-hhvm.svg?branch=master)](https://travis-ci.org/mayflower/puppet-hhvm)
 
 #### Table of Contents
 
