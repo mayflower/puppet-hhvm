@@ -16,6 +16,7 @@
 # See LICENSE file
 #
 class hhvm::package(
+  $ensure  = 'installed',
   $package = 'hhvm'
 ) {
 
@@ -26,6 +27,6 @@ class hhvm::package(
   validate_string($package)
 
   package { $package:
-    ensure => 'installed',
+    ensure => $ensure,
   }
 }
