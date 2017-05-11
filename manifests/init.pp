@@ -24,9 +24,13 @@
 class hhvm (
   $manage_repos = true,
   $pgsql        = false,
+  $settings     = {},
 ) {
 
   validate_bool($manage_repos)
+  validate_hash($settings)
+  
+  $_settings = hiera_hash('hhvm::settings',$settings)
 
   if $manage_repos {
     anchor { 'hhvm::repo': } ->
@@ -36,7 +40,9 @@ class hhvm (
 
   anchor { 'hhvm::begin': } ->
     class { 'hhvm::package': } ->
-    class { 'hhvm::config': } ->
+    class { 'hhvm::config': 
+      settings => $_settings,
+    } ->
     class { 'hhvm::service': } ->
   anchor { 'hhvm::end': }
 
